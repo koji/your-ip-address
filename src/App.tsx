@@ -1,32 +1,36 @@
-import { useState } from "react";
-
-import reactLogo from "./assets/react.svg";
-
-import viteLogo from "/vite.svg";
+import { useState, useEffect } from "react";
 import "./App.css";
 
+const URL = "https://api.ipify.org?format=json";
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [ipAddress, setIpAddress] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  useEffect(() => {
+    fetch(URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("something wrong. there might be a network issue.");
+          return response.json();
+        }
+      })
+      .then((data: any) => {
+        setIpAddress(data.ip);
+      })
+      .catch((error: any) => {
+        setIpAddress("Sorry I cannot get your ip address...");
+        setErrorMessage(`fetching error ${error}`);
+      });
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>your ip address</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <p>{ipAddress}</p>
+        {errorMessage !== "" ? <p>{errorMessage}</p> : null}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
