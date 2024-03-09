@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.ip-address {
+  font-size: 2rem;
+}
+
+
+.error-msg {
+  font-size: 1rem;
+  color: #e10909;
+}

@@ -10,11 +10,10 @@ function App() {
   useEffect(() => {
     fetch(URL)
       .then((response) => {
-        console.log(response.body);
         if (!response.ok) {
           throw new Error("something wrong. there might be a network issue.");
-          return response.json();
         }
+        return response.json();
       })
       .then((data: any) => {
         setIpAddress(data.ip);
@@ -29,8 +28,8 @@ function App() {
     <>
       <h1>your ip address</h1>
       <div className="card">
-        <p>{ipAddress}</p>
-        {errorMessage !== "" ? <p>{errorMessage}</p> : null}
+        <p className="ip-address">{ipAddress}</p>
+        {errorMessage !== "" ? <p className="error-msg">{errorMessage}</p> : null}
       </div>
     </>
   );
