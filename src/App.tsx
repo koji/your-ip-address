@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     fetch(URL)
       .then((response) => {
+        console.log(response.body);
         if (!response.ok) {
           throw new Error("something wrong. there might be a network issue.");
           return response.json();
